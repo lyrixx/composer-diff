@@ -1,0 +1,72 @@
+{% macro render(title, packages) %}
+    {% if packages %}
+        <div class="mt-4">
+            <h3>
+                <i class="fas {% if title in 'Dev' %}fa-wrench{% else %}fa-box{% endif %} me-2"></i>
+                {{ title }}
+            </h3>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Package</th>
+                            <th>Old Version</th>
+                            <th>New Version</th>
+                            <th>Status</th>
+                            <th>Compare</th>
+                            <th>License</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for package in packages %}
+                            {% set isDowngrade = package.operation == 'downgrade' %}
+                            {% set isInstall = package.operation == 'install' %}
+                            {% set isRemove = package.operation == 'remove' %}
+                            {% set isUpgrade = package.operation == 'upgrade' %}
+                            <tr>
+                                <td>
+                                    <a href="{{ package.link }}" target="_blank">
+                                        <i class="fas fa-external-link-alt me-1"></i>
+                                        {{ package.name }}
+                                    </a>
+                                </td>
+                                <td>{{ package.version_base }}</td>
+                                <td>{{ package.version_target }}</td>
+                                <td class="operation-{{ package.operation }}"
+                                >
+                                    {% if isDowngrade %}<i class="fas fa-arrow-down me-1"></i> {% endif %}
+                                    {% if isInstall %}<i class="fas fa-plus-circle me-1"></i> {% endif %}
+                                    {% if isRemove %}<i class="fas fa-minus-circle me-1"></i> {% endif %}
+                                    {% if isUpgrade %}<i class="fas fa-arrow-up me-1"></i> {% endif %}
+                                    {{ package.operation }}
+                                </td>
+                                <td>
+                                    {% if isUpgrade or isDowngrade %}
+                                        <a href="{{ package.compare }}" class="compare-link" target="_blank">
+                                            <i class="fas fa-code-branch me-1"></i>View diff
+                                        </a>
+                                    {% else %}
+                                        <span class="text-muted">—</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <span class="badge bg-light text-dark">{{ package.license }}</span>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% if not diff['packages'] and not diff['packages-dev'] %}
+    <div class="alert alert-warning mt-2" role="alert">
+        Both <code>composer.lock</code> looks the same
+    </div>
+{% endif %}
+
+
+{{ _self.render('Packages', diff['packages']) }}
+{{ _self.render('Dev Packages', diff['packages-dev']) }}

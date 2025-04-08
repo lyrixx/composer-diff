@@ -1,0 +1,43 @@
+name: Build the public website, and publish to GitHub Pages
+
+on:
+    push:
+        branches: ["main"]
+
+permissions:
+    contents: read
+    pages: write
+    id-token: write
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        environment:
+            name: github-pages
+            url: ${{steps.deployment.outputs.page_url}}
+        steps:
+            - name: Setup Pages
+              uses: actions/configure-pages@v4
+
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Install castor
+              uses: castor-php/setup-castor@v0.1.0
+
+            - name: Build
+              run: |
+                  set -x
+                  castor install
+                  castor wasm:export --pack --build
+              env:
+                BASE_URL: /composer-diff
+
+            - name: Upload Artifact
+              uses: actions/upload-pages-artifact@v3
+              with:
+                  path: "public"
+
+            - name: Deploy to GitHub Pages
+              id: deployment
+              uses: actions/deploy-pages@v4
