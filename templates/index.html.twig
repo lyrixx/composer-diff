@@ -265,6 +265,46 @@
                     <pre>{{  result.diff.markdown }}</pre>
                 </div>
             {% endif %}
+            <footer class="mt-5 pt-4 border-top">
+                <div class="mb-4 py-3 px-4 bg-light rounded">
+                    <div class="d-flex align-items-center">
+                        <div class="me-3">
+                            <i class="fab fa-github fa-2x text-secondary"></i>
+                        </div>
+                        <div>
+                        <h3 class="h5 mb-1">Open Source Project</h3>
+                            <p class="mb-1">This tool is open source and available on GitHub. Feel free to contribute, report issues, or propose new features.</p>
+                            <a href="https://github.com/lyrixx/composer-diff" class="btn btn-sm btn-outline-primary mt-1" target="_blank">
+                                <i class="fas fa-code-branch me-1"></i>View on GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4 py-3 px-4 bg-light rounded">
+                    <div class="d-flex align-items-center">
+                        <div class="me-3">
+                            <i class="fas fa-heart fa-2x text-secondary"></i>
+                        </div>
+                        <div>
+                        <h3 class="h5 mb-1">Thanks</h3>
+                            <p class="mb-1">We would like to thank the following projects, for inspiration, code, or both:</p>
+                            <ul class="list-unstyled d-flex flex-wrap gap-3">
+                                <li>
+                                    <a href="https://github.com/soyuka/php-wasm" class="btn btn-outline-secondary btn-sm" target="_blank">
+                                        <i class="fab fa-github me-1"></i>php-wasm
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://github.com/IonBazan/composer-diff" class="btn btn-outline-secondary btn-sm" target="_blank">
+                                        <i class="fab fa-github me-1"></i>composer-diff
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </footer>
         </div>
 
         {% if not result %}
