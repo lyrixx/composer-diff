@@ -44,19 +44,12 @@ class Comparator
             $this->packageDiff->loadPackagesFromArray($newLock, true, false)
         );
 
-        $generators = new GeneratorContainer([]);
-
         $output = new BufferedOutput();
-        $formatter = new JsonFormatter($output, $generators);
-        $formatter->render($prodOperations, $devOperations, true, true);
-        $array = json_decode($output->fetch(), true, 512, JSON_THROW_ON_ERROR);
-
-        $output = new BufferedOutput();
-        $formatter = new MarkdownTableFormatter($output, $generators);
+        $formatter = new MarkdownTableFormatter($output);
         $formatter->render($prodOperations, $devOperations, true, true);
         $markdown = $output->fetch();
 
-        return new Diff($array, $markdown);
+        return new Diff($prodOperations, $devOperations, $markdown);
     }
 
     private function getLockArray(string $composerLock, string $path): array
