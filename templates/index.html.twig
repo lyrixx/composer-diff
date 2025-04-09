@@ -240,6 +240,12 @@
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-search me-2"></i>Compare Files
                     </button>
+                    {% if not posted %}
+                        <button type="button" class="btn btn-primary" id="load-examples">
+                            <i class="fas fa-vial me-2"></i>Load examples
+                        </button>
+                    {% endif %}
+
                 </div>
             </form>
 
@@ -253,7 +259,31 @@
             {% endif %}
         </div>
 
+        {% if not posted %}
+            <script type="template" id="example-new">
+                {{ source('@data/new.json') }}
+            </script>
+            <script type="template" id="example-old">
+                {{ source('@data/old.json') }}
+            </script>
+        {% endif %}
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                document.body.addEventListener('click', (e) => {
+                    if (!e.target.matches("#load-examples")) {
+                        return;
+                    }
+
+                    e.preventDefault();
+
+                    document.getElementById('old').value = document.getElementById('example-old').innerHTML.trim();
+                    document.getElementById('new').value = document.getElementById('example-new').innerHTML.trim();
+                    document.getElementById('form').requestSubmit();
+                });
+            });
+        </script>
         {% if wasm ?? false %}
             <script type="module">
                 import php from "./build/php-web.mjs";

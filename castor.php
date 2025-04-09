@@ -15,6 +15,7 @@ use function Castor\fs;
 use function Castor\io;
 use function Castor\run as do_run;
 use function Castor\run_php;
+use function Castor\watch;
 
 #[AsTask(description: 'Install dependencies')]
 function install()
@@ -111,6 +112,17 @@ function serve(string $address = 'localhost:9999')
     io()->title("Serving on http://{$address}");
 
     run(['php', '-S', $address, '-t', 'public']);
+}
+
+#[AsTask(name: 'watch', description: 'Watch and rebuild')]
+function watch_and_build()
+{
+    io()->title('Watching for changes...');
+
+    watch([
+        __DIR__.'/src',
+        __DIR__.'/templates',
+    ], fn () => run(['castor', 'wasm:export', '--pack']));
 }
 
 function run(array $command, string $path = __DIR__): Process
