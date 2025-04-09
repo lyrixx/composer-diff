@@ -212,12 +212,13 @@
                     <div class="col-md-6 mb-3">
                         <div class="file-area">
                             <label for="old" class="form-label">
-                                <i class="fas fa-file-code me-2"></i>Original Composer Lock</label>
-                            <textarea name="old" id="old" class="form-control" rows="10" placeholder="Paste your old composer.lock file here...">{{ old }}</textarea>
-                            {% if posted and error and error.path == 'old' %}
+                                <i class="fas fa-file-code me-2"></i>Original Composer Lock
+                            </label>
+                            <textarea name="old" id="old" class="form-control" rows="10" placeholder="Paste your old composer.lock file here...">{{ result ? result.old }}</textarea>
+                            {% if result and result.error and result.error.path == 'old' %}
                                 <div class="alert alert-danger mt-2" role="alert">
                                     <i class="fas fa-exclamation-circle me-2"></i>
-                                    {{ error.message }}
+                                    {{ result.error.message }}
                                 </div>
                             {% endif %}
                         </div>
@@ -225,12 +226,13 @@
                     <div class="col-md-6 mb-3">
                         <div class="file-area">
                             <label for="new" class="form-label">
-                                <i class="fas fa-file-code me-2"></i>New Composer Lock</label>
-                            <textarea name="new" id="new" class="form-control" rows="10" placeholder="Paste your new composer.lock file here...">{{ new }}</textarea>
-                            {% if posted and error and error.path == 'new' %}
+                                <i class="fas fa-file-code me-2"></i>New Composer Lock
+                            </label>
+                            <textarea name="new" id="new" class="form-control" rows="10" placeholder="Paste your new composer.lock file here...">{{ result ? result.new }}</textarea>
+                            {% if result and result.error and result.error.path == 'new' %}
                                 <div class="alert alert-danger mt-2" role="alert">
                                     <i class="fas fa-exclamation-circle me-2"></i>
-                                    {{ error.message }}
+                                    {{ result.error.message }}
                                 </div>
                             {% endif %}
                         </div>
@@ -240,7 +242,7 @@
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-search me-2"></i>Compare Files
                     </button>
-                    {% if not posted %}
+                    {% if not result %}
                         <button type="button" class="btn btn-primary" id="load-examples">
                             <i class="fas fa-vial me-2"></i>Load examples
                         </button>
@@ -249,17 +251,17 @@
                 </div>
             </form>
 
-            {% if posted and diff %}
+            {% if result and result.diff %}
                 <div class="diff-section">
                     <h2>
                         <i class="fas fa-list me-2"></i>Comparison Results
                     </h2>
-                    {{ include('diff.html.twig', {diff, with_context: false}) }}
+                    {{ include('diff.html.twig', {diff: result.diff, with_context: false}) }}
                 </div>
             {% endif %}
         </div>
 
-        {% if not posted %}
+        {% if not result %}
             <script type="template" id="example-new">
                 {{ source('@data/new.json') }}
             </script>

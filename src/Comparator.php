@@ -13,7 +13,23 @@ use Symfony\Component\Console\Output\BufferedOutput;
 
 class Comparator
 {
-    public function compare(string $old, string $new): array
+    public function compare(string $old, string $new): Result
+    {
+        try {
+            $diff = $this->doCompare($old, $new);
+        } catch (JsonNotValid $th) {
+            $error = $th;
+        }
+
+        return new Result(
+            old: $old,
+            new: $new,
+            error: $error ?? null,
+            diff: $diff ?? null,
+        );
+    }
+
+    private function doCompare(string $old, string $new): array
     {
         $packageDiff = new PackageDiff();
 
