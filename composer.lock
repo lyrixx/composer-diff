@@ -650,12 +650,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/IonBazan/composer-diff.git",
-                "reference": "f0dff281670dcf6bbe54844db01133db515e2fdf"
+                "reference": "e58fd74f227c7ba3dbe55c5bfccc7fe82f6ed67c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/IonBazan/composer-diff/zipball/f0dff281670dcf6bbe54844db01133db515e2fdf",
-                "reference": "f0dff281670dcf6bbe54844db01133db515e2fdf",
+                "url": "https://api.github.com/repos/IonBazan/composer-diff/zipball/e58fd74f227c7ba3dbe55c5bfccc7fe82f6ed67c",
+                "reference": "e58fd74f227c7ba3dbe55c5bfccc7fe82f6ed67c",
                 "shasum": ""
             },
             "require": {
@@ -715,7 +715,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-04-09T17:55:29+00:00"
+            "time": "2025-04-09T18:16:40+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
