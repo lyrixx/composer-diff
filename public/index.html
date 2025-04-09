@@ -5482,7 +5482,7 @@
                     const buffer = [];
                     const {ccall, FS} = await php({
                         print(data) {
-                            buffer.push(data);
+                            buffer.push(data + "\n");
                         }
                     })
                     const parser = new DOMParser();

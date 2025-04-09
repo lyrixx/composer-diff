@@ -7,6 +7,7 @@ use Composer\Package\Loader\ArrayLoader;
 use Composer\Repository\ArrayRepository;
 use IonBazan\ComposerDiff\Diff\DiffEntries;
 use IonBazan\ComposerDiff\Formatter\JsonFormatter;
+use IonBazan\ComposerDiff\Formatter\MarkdownTableFormatter;
 use IonBazan\ComposerDiff\PackageDiff;
 use IonBazan\ComposerDiff\Url\GeneratorContainer;
 use Symfony\Component\Console\Output\BufferedOutput;
@@ -29,7 +30,7 @@ class Comparator
         );
     }
 
-    private function doCompare(string $old, string $new): array
+    private function doCompare(string $old, string $new): Diff
     {
         $packageDiff = new PackageDiff();
 
@@ -45,11 +46,19 @@ class Comparator
         $prodOperations = $packageDiff->getDiff($oldProd, $newProd, [], false);
         $devOperations = $packageDiff->getDiff($oldDev, $newDev, [], false);
 
-        $output = new BufferedOutput();
-        $formatter = new JsonFormatter($output, new GeneratorContainer([]));
-        $formatter->render($prodOperations, $devOperations, true, true);
+        $generators = new GeneratorContainer([]);
 
-        return json_decode($output->fetch(), true, 512, JSON_THROW_ON_ERROR);
+        $output = new BufferedOutput();
+        $formatter = new JsonFormatter($output, $generators);
+        $formatter->render($prodOperations, $devOperations, true, true);
+        $array = json_decode($output->fetch(), true, 512, JSON_THROW_ON_ERROR);
+
+        $output = new BufferedOutput();
+        $formatter = new MarkdownTableFormatter($output, $generators);
+        $formatter->render($prodOperations, $devOperations, true, true);
+        $markdown = $output->fetch();
+
+        return new Diff($array, $markdown);
     }
 
     private function createRepository(string $composerLock, bool $dev, string $path): ArrayRepository

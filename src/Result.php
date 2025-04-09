@@ -8,6 +8,6 @@ final readonly class Result
         public string $old,
         public string $new,
         public ?string $error = null,
-        public ?array $diff = null,
+        public ?Diff $diff = null,
     ) {}
 }

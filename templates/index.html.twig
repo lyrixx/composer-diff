@@ -256,7 +256,13 @@
                     <h2>
                         <i class="fas fa-list me-2"></i>Comparison Results
                     </h2>
-                    {{ include('diff.html.twig', {diff: result.diff, with_context: false}) }}
+                    {{ include('diff.html.twig', {diff: result.diff.array, with_context: false}) }}
+                </div>
+                <div class="diff-section">
+                    <h2>
+                        <i class="fas fa-list me-2"></i>Comparison Results in markdown
+                    </h2>
+                    <pre>{{  result.diff.markdown }}</pre>
                 </div>
             {% endif %}
         </div>
@@ -294,7 +300,7 @@
                     const buffer = [];
                     const {ccall, FS} = await php({
                         print(data) {
-                            buffer.push(data);
+                            buffer.push(data + "\n");
                         }
                     })
                     const parser = new DOMParser();
