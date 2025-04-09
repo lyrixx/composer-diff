@@ -2,10 +2,6 @@
 
 namespace App;
 
-use Composer\Package\CompletePackage;
-use Composer\Package\Loader\ArrayLoader;
-use Composer\Repository\ArrayRepository;
-use IonBazan\ComposerDiff\Diff\DiffEntries;
 use IonBazan\ComposerDiff\Formatter\JsonFormatter;
 use IonBazan\ComposerDiff\Formatter\MarkdownTableFormatter;
 use IonBazan\ComposerDiff\PackageDiff;
@@ -14,6 +10,10 @@ use Symfony\Component\Console\Output\BufferedOutput;
 
 class Comparator
 {
+    public function __construct(private readonly PackageDiff $packageDiff = new PackageDiff())
+    {
+    }
+
     public function compare(string $old, string $new): Result
     {
         try {
@@ -32,19 +32,17 @@ class Comparator
 
     private function doCompare(string $old, string $new): Diff
     {
-        $packageDiff = new PackageDiff();
+        $oldLock = $this->getLockArray($old, 'old');
+        $newLock = $this->getLockArray($new, 'new');
 
-        $prodOperations = new DiffEntries();
-        $devOperations = new DiffEntries();
-
-        $oldProd = $this->createRepository($old, false, 'old');
-        $newProd = $this->createRepository($new, false, 'new');
-
-        $oldDev = $this->createRepository($old, true, 'old');
-        $newDev = $this->createRepository($new, true, 'new');
-
-        $prodOperations = $packageDiff->getDiff($oldProd, $newProd, [], false);
-        $devOperations = $packageDiff->getDiff($oldDev, $newDev, [], false);
+        $prodOperations = $this->packageDiff->getDiff(
+            $this->packageDiff->loadPackagesFromArray($oldLock, false, false),
+            $this->packageDiff->loadPackagesFromArray($newLock, false, false)
+        );
+        $devOperations = $this->packageDiff->getDiff(
+            $this->packageDiff->loadPackagesFromArray($oldLock, true, false),
+            $this->packageDiff->loadPackagesFromArray($newLock, true, false)
+        );
 
         $generators = new GeneratorContainer([]);
 
@@ -61,7 +59,7 @@ class Comparator
         return new Diff($array, $markdown);
     }
 
-    private function createRepository(string $composerLock, bool $dev, string $path): ArrayRepository
+    private function getLockArray(string $composerLock, string $path): array
     {
         try {
             $data = \json_decode($composerLock, true, 512, JSON_THROW_ON_ERROR);
@@ -69,22 +67,10 @@ class Comparator
             throw new JsonNotValid(sprintf('Invalid JSON: %s.', $th->getMessage()), $path);
         }
 
-        if (!isset($data['packages'.($dev ? '-dev' : '')])) {
+        if (!isset($data['packages-dev']) && !isset($data['packages'])) {
             throw new JsonNotValid('The file does not look like composer.lock file', $path);
         }
 
-        $loader = new ArrayLoader();
-
-        $packages = [];
-
-        foreach ($data['packages'.($dev ? '-dev' : '')] ?? [] as $packageInfo) {
-            $packages[] = $loader->load($packageInfo);
-        }
-
-        foreach ($data['platform'.($dev ? '-dev' : '')] as $name => $version) {
-            $packages[] = new CompletePackage($name, $version, $version);
-        }
-
-        return new ArrayRepository($packages);
+        return $data;
     }
 }

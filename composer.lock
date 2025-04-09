@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fe9841cc2d4b667202e257348a454fac",
+    "content-hash": "9a886b9f1f00e6ce761f87c64cacc48c",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -646,16 +646,16 @@
         },
         {
             "name": "ion-bazan/composer-diff",
-            "version": "v1.11.0",
+            "version": "dev-feature/web-refactor",
             "source": {
                 "type": "git",
                 "url": "https://github.com/IonBazan/composer-diff.git",
-                "reference": "623a9a01412606e0ec5a035dfe05d4bc4b9103b5"
+                "reference": "f0dff281670dcf6bbe54844db01133db515e2fdf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/IonBazan/composer-diff/zipball/623a9a01412606e0ec5a035dfe05d4bc4b9103b5",
-                "reference": "623a9a01412606e0ec5a035dfe05d4bc4b9103b5",
+                "url": "https://api.github.com/repos/IonBazan/composer-diff/zipball/f0dff281670dcf6bbe54844db01133db515e2fdf",
+                "reference": "f0dff281670dcf6bbe54844db01133db515e2fdf",
                 "shasum": ""
             },
             "require": {
@@ -707,7 +707,7 @@
             ],
             "support": {
                 "issues": "https://github.com/IonBazan/composer-diff/issues",
-                "source": "https://github.com/IonBazan/composer-diff/tree/v1.11.0"
+                "source": "https://github.com/IonBazan/composer-diff/tree/feature/web-refactor"
             },
             "funding": [
                 {
@@ -715,7 +715,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-06T07:23:48+00:00"
+            "time": "2025-04-09T17:55:29+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -2639,7 +2639,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "ion-bazan/composer-diff": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {},
