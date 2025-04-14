@@ -73,9 +73,7 @@ function wasm_pack()
                     '*/tools',
                     '/app/build',
                     '/app/public',
-                    '/app/vendor/symfony/console',
                     '/app/vendor/symfony/finder',
-                    '/app/vendor/react',
                 '--export-name=createPhpModule',
     ]);
 }
