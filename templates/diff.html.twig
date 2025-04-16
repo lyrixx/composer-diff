@@ -46,7 +46,7 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                    <span class="badge bg-light text-dark">{{ entry.licenses|join(', ')|default }}</span>
+                                    <span class="badge bg-light text-dark">{{ entry.licenses|join(', ') }}</span>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -57,7 +57,7 @@
     {% endif %}
 {% endmacro %}
 
-{% if not diff['packages'] and not diff['packages-dev'] %}
+{% if not diff.prodEntries and not diff.devEntries %}
     <div class="alert alert-warning mt-2" role="alert">
         Both <code>composer.lock</code> looks the same
     </div>
