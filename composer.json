@@ -1,5 +1,5 @@
 {
-    "name": "jolicode/diff.composer.jolicode.com",
+    "name": "lyrixx/composer-diff",
     "description": "Compare what changed in your composer.lock",
     "license": "MIT",
     "type": "project",
@@ -26,6 +26,7 @@
             "ion-bazan/composer-diff": false
         },
         "bump-after-update": true,
+        "optimize-autoloader": true,
         "sort-packages": true
     }
 }

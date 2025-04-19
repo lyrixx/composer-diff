@@ -73,6 +73,7 @@ function wasm_pack()
                     '*/tools',
                     '/app/build',
                     '/app/public',
+                    '/app/vendor/symfony/finder',
                 '--export-name=createPhpModule',
     ]);
 }
