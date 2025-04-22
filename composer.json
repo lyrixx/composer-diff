@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "ion-bazan/composer-diff": "^1.11",
+        "ion-bazan/composer-diff": "^1.12",
         "composer/composer": "^2.8.8",
         "symfony/var-dumper": "^7.2.3",
         "twig/twig": "^3.20",

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fe9841cc2d4b667202e257348a454fac",
+    "content-hash": "8b5e3bd6bf6cb2cab3472e45d7749d61",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -646,16 +646,16 @@
         },
         {
             "name": "ion-bazan/composer-diff",
-            "version": "v1.11.0",
+            "version": "v1.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/IonBazan/composer-diff.git",
-                "reference": "623a9a01412606e0ec5a035dfe05d4bc4b9103b5"
+                "reference": "5eb28baa038045f5a161c958847e6d9920c79191"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/IonBazan/composer-diff/zipball/623a9a01412606e0ec5a035dfe05d4bc4b9103b5",
-                "reference": "623a9a01412606e0ec5a035dfe05d4bc4b9103b5",
+                "url": "https://api.github.com/repos/IonBazan/composer-diff/zipball/5eb28baa038045f5a161c958847e6d9920c79191",
+                "reference": "5eb28baa038045f5a161c958847e6d9920c79191",
                 "shasum": ""
             },
             "require": {
@@ -707,7 +707,7 @@
             ],
             "support": {
                 "issues": "https://github.com/IonBazan/composer-diff/issues",
-                "source": "https://github.com/IonBazan/composer-diff/tree/v1.11.0"
+                "source": "https://github.com/IonBazan/composer-diff/tree/v1.12.0"
             },
             "funding": [
                 {
@@ -715,7 +715,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-06T07:23:48+00:00"
+            "time": "2025-04-18T14:19:55+00:00"
         },
         {
             "name": "justinrainbow/json-schema",

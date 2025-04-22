@@ -1,5 +1,5 @@
-{% macro render(title, packages) %}
-    {% if packages %}
+{% macro render(title, entries) %}
+    {% if entries %}
         <div class="mt-4">
             <h3>
                 <i class="fas {% if title in 'Dev' %}fa-wrench{% else %}fa-box{% endif %} me-2"></i>
@@ -18,31 +18,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for package in packages %}
-                            {% set isDowngrade = package.operation == 'downgrade' %}
-                            {% set isInstall = package.operation == 'install' %}
-                            {% set isRemove = package.operation == 'remove' %}
-                            {% set isUpgrade = package.operation == 'upgrade' %}
+                        {% for entry in entries %}
                             <tr>
                                 <td>
-                                    <a href="{{ package.link }}" target="_blank">
+                                    <a href="{{ entry.projectUrl }}" target="_blank">
                                         <i class="fas fa-external-link-alt me-1"></i>
-                                        {{ package.name }}
+                                        {{ entry.package.name }}
                                     </a>
                                 </td>
-                                <td class="operation-{{ package.operation }}"
+                                <td class="operation-{{ entry.type }}"
                                 >
-                                    {% if isDowngrade %}<i class="fas fa-arrow-down me-1"></i> {% endif %}
-                                    {% if isInstall %}<i class="fas fa-plus-circle me-1"></i> {% endif %}
-                                    {% if isRemove %}<i class="fas fa-minus-circle me-1"></i> {% endif %}
-                                    {% if isUpgrade %}<i class="fas fa-arrow-up me-1"></i> {% endif %}
-                                    {{ package.operation|title }}
+                                    {% if entry.isDowngrade %}<i class="fas fa-arrow-down me-1"></i> {% endif %}
+                                    {% if entry.isInstall %}<i class="fas fa-plus-circle me-1"></i> {% endif %}
+                                    {% if entry.isRemove %}<i class="fas fa-minus-circle me-1"></i> {% endif %}
+                                    {% if entry.isUpgrade %}<i class="fas fa-arrow-up me-1"></i> {% endif %}
+                                    {{ entry.type|title }}
                                 </td>
-                                <td>{{ package.version_base }}</td>
-                                <td>{{ package.version_target }}</td>
+                                <td>{{ entry.baseVersion }}</td>
+                                <td>{{ entry.targetVersion }}</td>
                                 <td>
-                                    {% if isUpgrade or isDowngrade %}
-                                        <a href="{{ package.compare }}" class="compare-link" target="_blank">
+                                    {% if entry.isUpgrade or entry.isDowngrade %}
+                                        <a href="{{ entry.url }}" class="compare-link" target="_blank">
                                             <i class="fas fa-code-branch me-1"></i>View diff
                                         </a>
                                     {% else %}
@@ -50,7 +46,7 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                    <span class="badge bg-light text-dark">{{ package.license }}</span>
+                                    <span class="badge bg-light text-dark">{{ entry.licenses|join(', ') }}</span>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -61,12 +57,12 @@
     {% endif %}
 {% endmacro %}
 
-{% if not diff['packages'] and not diff['packages-dev'] %}
+{% if not diff.prodEntries and not diff.devEntries %}
     <div class="alert alert-warning mt-2" role="alert">
         Both <code>composer.lock</code> looks the same
     </div>
 {% endif %}
 
 
-{{ _self.render('Packages', diff['packages']) }}
-{{ _self.render('Dev Packages', diff['packages-dev']) }}
+{{ _self.render('Packages', diff.prodEntries) }}
+{{ _self.render('Dev Packages', diff.devEntries) }}
