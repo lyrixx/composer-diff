@@ -21,10 +21,14 @@
                         {% for entry in entries %}
                             <tr>
                                 <td>
-                                    <a href="{{ entry.projectUrl }}" target="_blank">
-                                        <i class="fas fa-external-link-alt me-1"></i>
+                                    {% if entry.projectUrl %}
+                                        <a href="{{ entry.projectUrl }}" target="_blank">
+                                            <i class="fas fa-external-link-alt me-1"></i>
+                                            {{ entry.package.name }}
+                                        </a>
+                                    {% else %}
                                         {{ entry.package.name }}
-                                    </a>
+                                    {% endif %}
                                 </td>
                                 <td class="operation-{{ entry.type }}"
                                 >
@@ -37,7 +41,7 @@
                                 <td>{{ entry.baseVersion }}</td>
                                 <td>{{ entry.targetVersion }}</td>
                                 <td>
-                                    {% if entry.isUpgrade or entry.isDowngrade %}
+                                    {% if (entry.isUpgrade or entry.isDowngrade) and entry.url %}
                                         <a href="{{ entry.url }}" class="compare-link" target="_blank">
                                             <i class="fas fa-code-branch me-1"></i>View diff
                                         </a>
