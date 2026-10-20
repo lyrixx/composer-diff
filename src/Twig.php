@@ -11,8 +11,8 @@ class Twig extends Environment
 {
     public function __construct()
     {
-        $loader = new FilesystemLoader(__DIR__.'/../templates');
-        $loader->addPath(__DIR__.'/../data', 'data');
+        $loader = new FilesystemLoader(__DIR__ . '/../templates');
+        $loader->addPath(__DIR__ . '/../data', 'data');
 
         parent::__construct($loader, [
             'strict_variables' => true,
