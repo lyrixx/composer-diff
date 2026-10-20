@@ -67,9 +67,9 @@ function watch_and_build(): void
     io()->title('Watching for changes...');
 
     watch([
-        __DIR__.'/src',
-        __DIR__.'/templates',
-    ], fn () => build());
+        __DIR__ . '/src',
+        __DIR__ . '/templates',
+    ], static fn() => build());
 }
 
 /**
@@ -78,10 +78,13 @@ function watch_and_build(): void
  */
 function pack_app(): void
 {
-    $app = __DIR__.'/build/app';
+    $app = __DIR__ . '/build/app';
 
     fs()->remove($app);
-    fs()->mirror(__DIR__, $app, finder()
+    fs()->mirror(
+        __DIR__,
+        $app,
+        finder()
         ->in(__DIR__)
         ->files()
         ->path(['#^(data|src|templates|vendor)/#', '#^lib\.php$#'])

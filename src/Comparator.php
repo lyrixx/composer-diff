@@ -10,9 +10,7 @@ use Symfony\Component\Console\Output\BufferedOutput;
 
 class Comparator
 {
-    public function __construct(private readonly PackageDiff $packageDiff = new PackageDiff())
-    {
-    }
+    public function __construct(private readonly PackageDiff $packageDiff = new PackageDiff()) {}
 
     public function compare(string $old, string $new): Result
     {
@@ -55,9 +53,9 @@ class Comparator
     private function getLockArray(string $composerLock, string $path): array
     {
         try {
-            $data = \json_decode($composerLock, true, 512, JSON_THROW_ON_ERROR);
+            $data = json_decode($composerLock, true, 512, \JSON_THROW_ON_ERROR);
         } catch (\JsonException $th) {
-            throw new JsonNotValid(sprintf('Invalid JSON: %s.', $th->getMessage()), $path);
+            throw new JsonNotValid(\sprintf('Invalid JSON: %s.', $th->getMessage()), $path);
         }
 
         if (!isset($data['packages-dev']) && !isset($data['packages'])) {
