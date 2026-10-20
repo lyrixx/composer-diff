@@ -25,11 +25,21 @@ jobs:
             - name: Install castor
               uses: castor-php/setup-castor@v1
 
+            # The GitHub Actions cache of buildx needs the docker-container
+            # driver, and the runtime token and URLs, that only actions get
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v4
+
+            - name: Expose GitHub runtime
+              uses: crazy-max/ghaction-github-runtime@v4
+
             - name: Build
               run: |
                   set -x
                   castor app:install
-                  castor app:build
+                  castor app:build \
+                      --set '*.cache-from=type=gha' \
+                      --set '*.cache-to=type=gha,mode=max,ignore-error=true'
               env:
                   BUILDKIT_PROGRESS: plain
 

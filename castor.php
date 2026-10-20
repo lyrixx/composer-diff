@@ -1,7 +1,9 @@
 <?php
 
+use Castor\Attribute\AsOption;
 use Castor\Attribute\AsTask;
 use PhpWasm\Stack;
+use Symfony\Component\Console\Input\InputOption;
 
 use function Castor\finder;
 use function Castor\fs;
@@ -29,27 +31,26 @@ function update(): void
 }
 
 #[AsTask(namespace: 'app', description: 'Build the website in the public folder')]
-function build(): void
-{
+function build(
+    #[AsOption(description: 'Override a value of the bake file, as "docker buildx bake --set" does (the CI gives the cache this way), can be repeated', mode: InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY)]
+    array $set = [],
+): void {
     io()->title('Building the website');
 
     pack_app();
     // PHP is compiled to WASM by lyrixx/php-wasm-builder
-    [$build] = PhpWasm\build(
+    PhpWasm\build([
         Stack::named('composer-diff')
             // Keep in sync with config.platform.php in composer.json
             ->php('8.5.11')
             ->extensions('ctype', 'filter', 'mbstring', 'tokenizer')
             ->embed('build/app')
             ->targets('web')
-            ->memory('256mb'),
-    );
+            ->memory('256mb')
+            ->outputDir('public/build'),
+    ], $set);
 
     run_php('generate-homepage.php');
-
-    fs()->remove(__DIR__.'/public/build');
-    fs()->copy($build->artifact('web', 'mjs'), __DIR__.'/public/build/php-web.mjs');
-    fs()->copy($build->artifact('web', 'wasm'), __DIR__.'/public/build/php-web.wasm');
 }
 
 #[AsTask(namespace: 'app', description: 'Run the server')]
