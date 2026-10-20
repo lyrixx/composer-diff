@@ -23,15 +23,15 @@ jobs:
               uses: actions/checkout@v4
 
             - name: Install castor
-              uses: castor-php/setup-castor@v0.1.0
+              uses: castor-php/setup-castor@v1
 
             - name: Build
               run: |
                   set -x
-                  castor install
-                  castor wasm:export --pack --build
+                  castor app:install
+                  castor app:build
               env:
-                BASE_URL: /composer-diff
+                  BUILDKIT_PROGRESS: plain
 
             - name: Upload Artifact
               uses: actions/upload-pages-artifact@v3

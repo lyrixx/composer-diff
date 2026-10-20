@@ -1,0 +1,64 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "87937971ae22a3c6a17a044ec4412702",
+    "packages": [
+        {
+            "name": "lyrixx/php-wasm-builder",
+            "version": "v0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lyrixx/php-wasm-builder.git",
+                "reference": "efa959d83b8cd76171aac0d6a74448dcd45791da"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lyrixx/php-wasm-builder/zipball/efa959d83b8cd76171aac0d6a74448dcd45791da",
+                "reference": "efa959d83b8cd76171aac0d6a74448dcd45791da",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/functions-internal.php",
+                    "src/functions.php"
+                ],
+                "psr-4": {
+                    "PhpWasm\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Builds PHP as WebAssembly: a Dockerfile, and castor functions and tasks to build named stacks (a PHP version, extensions, what to embed) with one command",
+            "keywords": [
+                "castor",
+                "emscripten",
+                "php",
+                "wasm",
+                "webassembly"
+            ],
+            "support": {
+                "issues": "https://github.com/lyrixx/php-wasm-builder/issues",
+                "source": "https://github.com/lyrixx/php-wasm-builder/tree/v0.2.0"
+            },
+            "time": "2026-10-20T20:02:54+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {},
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {},
+    "platform-dev": {},
+    "plugin-api-version": "2.9.0"
+}
