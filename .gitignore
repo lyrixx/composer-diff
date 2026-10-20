@@ -1,3 +1,4 @@
 .castor.stub.php
+/.castor/vendor/
 /vendor/
 build/

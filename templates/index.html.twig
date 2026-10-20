@@ -360,9 +360,9 @@
                         FS.unlink('/app/data/new.json')
                         FS.writeFile('/app/data/new.json', newJson);
 
-                        ccall('phpw_with_args', 'string', [
-                        'string', 'string', 'string'
-                        ], ['/app/lib.php', '/app/data/old.json', '/app/data/new.json']);
+                        ccall('phpw_run', null, ['string'], [
+                            '$argv = ["/app/lib.php", "/app/data/old.json", "/app/data/new.json"]; require "/app/lib.php";',
+                        ]);
 
                         const htmlString = buffer.join('');
                         buffer.length = 0;
