@@ -19,9 +19,8 @@ open http://127.0.0.1:9999/
 ## Internal
 
 This website use WASM to run a PHP interpreter in the browser.
-PHP is built by [php-wasm-builder](https://github.com/lyrixx/php-wasm-builder),
-with the stack declared in `stacks.php`. You can have a look to `castor.php` to
-see how it works.
+PHP is built by [php-wasm-builder](https://github.com/lyrixx/php-wasm-builder).
+You can have a look to `castor.php` to see how it works.
 
 ## Thanks
 

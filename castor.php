@@ -1,6 +1,7 @@
 <?php
 
 use Castor\Attribute\AsTask;
+use PhpWasm\Stack;
 
 use function Castor\finder;
 use function Castor\fs;
@@ -33,8 +34,16 @@ function build(): void
     io()->title('Building the website');
 
     pack_app();
-    // PHP is compiled to WASM by lyrixx/php-wasm-builder, see stacks.php
-    [$build] = PhpWasm\build('composer-diff');
+    // PHP is compiled to WASM by lyrixx/php-wasm-builder
+    [$build] = PhpWasm\build(
+        Stack::named('composer-diff')
+            // Keep in sync with config.platform.php in composer.json
+            ->php('8.5.11')
+            ->extensions('ctype', 'filter', 'mbstring', 'tokenizer')
+            ->embed('build/app')
+            ->targets('web')
+            ->memory('256mb'),
+    );
 
     run_php('generate-homepage.php');
 

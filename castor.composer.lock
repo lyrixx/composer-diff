@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "87937971ae22a3c6a17a044ec4412702",
+    "content-hash": "27ffcdf41dc1099043937a8fda164659",
     "packages": [
         {
             "name": "lyrixx/php-wasm-builder",
-            "version": "v0.2.0",
+            "version": "v0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lyrixx/php-wasm-builder.git",
-                "reference": "efa959d83b8cd76171aac0d6a74448dcd45791da"
+                "reference": "e8d4657fe77adbf117f94fc29a5235f30e842546"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lyrixx/php-wasm-builder/zipball/efa959d83b8cd76171aac0d6a74448dcd45791da",
-                "reference": "efa959d83b8cd76171aac0d6a74448dcd45791da",
+                "url": "https://api.github.com/repos/lyrixx/php-wasm-builder/zipball/e8d4657fe77adbf117f94fc29a5235f30e842546",
+                "reference": "e8d4657fe77adbf117f94fc29a5235f30e842546",
                 "shasum": ""
             },
             "require": {
@@ -37,7 +37,7 @@
             "license": [
                 "MIT"
             ],
-            "description": "Builds PHP as WebAssembly: a Dockerfile, and castor functions and tasks to build named stacks (a PHP version, extensions, what to embed) with one command",
+            "description": "Builds PHP as WebAssembly: a Dockerfile, and a castor function to build stacks (a PHP version, extensions, what to embed) with one command",
             "keywords": [
                 "castor",
                 "emscripten",
@@ -47,9 +47,9 @@
             ],
             "support": {
                 "issues": "https://github.com/lyrixx/php-wasm-builder/issues",
-                "source": "https://github.com/lyrixx/php-wasm-builder/tree/v0.2.0"
+                "source": "https://github.com/lyrixx/php-wasm-builder/tree/v0.3.0"
             },
-            "time": "2026-10-20T20:02:54+00:00"
+            "time": "2026-10-20T21:25:13+00:00"
         }
     ],
     "packages-dev": [],
