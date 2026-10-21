@@ -1,0 +1,87 @@
+name: CI
+
+on:
+    push:
+        branches: ["main"]
+    pull_request:
+
+# On main, the runs wait for each other: an older one could deploy last
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+    contents: read
+
+jobs:
+    qa:
+        name: QA
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v7
+
+            - name: Install castor
+              uses: castor-php/setup-castor@v1
+
+            - name: PHP CS Fixer
+              run: castor qa:cs --dry-run
+
+            - name: PHPStan
+              run: castor qa:phpstan
+
+    build:
+        name: Build
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v7
+
+            - name: Install castor
+              uses: castor-php/setup-castor@v1
+
+            # The GitHub Actions cache of buildx needs the docker-container
+            # driver, and the runtime token and URLs, that only actions get
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v4
+
+            - name: Expose GitHub runtime
+              uses: crazy-max/ghaction-github-runtime@v4
+
+            - name: Build
+              run: |
+                  set -x
+                  castor app:build \
+                      --set '*.cache-from=type=gha' \
+                      --set '*.cache-to=type=gha,mode=max,ignore-error=true'
+              env:
+                  BUILDKIT_PROGRESS: plain
+
+            # Runs the build for the web in node: nothing is deployed if it does
+            # not boot, or does not compare the examples
+            - name: Smoke test
+              run: castor app:smoke
+
+            - name: Upload Artifact
+              uses: actions/upload-pages-artifact@v5
+              with:
+                  path: "public"
+
+    deploy:
+        name: Deploy
+        if: github.event_name == 'push'
+        needs: [qa, build]
+        runs-on: ubuntu-latest
+        permissions:
+            pages: write
+            id-token: write
+        environment:
+            name: github-pages
+            url: ${{steps.deployment.outputs.page_url}}
+        steps:
+            - name: Setup Pages
+              uses: actions/configure-pages@v6
+
+            - name: Deploy to GitHub Pages
+              id: deployment
+              uses: actions/deploy-pages@v5

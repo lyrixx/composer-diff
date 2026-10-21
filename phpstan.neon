@@ -1,0 +1,15 @@
+parameters:
+    level: 8
+    paths:
+        - castor.php
+        - generate-homepage.php
+        - index.php
+        - lib.php
+        - src
+    scanFiles:
+        - .castor.stub.php
+    bootstrapFiles:
+        - vendor/autoload.php
+        # Dependencies of the Castor tasks (castor.composer.json)
+        - .castor/vendor/autoload.php
+    tmpDir: build/phpstan

@@ -18,6 +18,7 @@ return (new Config())
         (new Finder())
             // 💡 root folder to check
             ->in(__DIR__)
-            
+            // A copy of the sources, see pack_app() in castor.php
+            ->exclude('build')
     )
 ;
