@@ -50,6 +50,9 @@ class Comparator
         return new Diff($prodOperations, $devOperations, $markdown);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function getLockArray(string $composerLock, string $path): array
     {
         try {

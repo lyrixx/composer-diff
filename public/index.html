@@ -5516,38 +5516,21 @@
             });
         </script>
                     <script type="module">
-                import php from "./build/php-web.mjs";
+                import { compare } from "./page.mjs";
 
-                document.addEventListener('DOMContentLoaded', async () => {
-                    const buffer = [];
-                    const {ccall, FS} = await php({
-                        print(data) {
-                            buffer.push(data + "\n");
-                        }
-                    })
+                document.addEventListener('DOMContentLoaded', () => {
                     const parser = new DOMParser();
 
-                    document.body.addEventListener('submit', (e) => {
+                    document.body.addEventListener('submit', async (e) => {
                         if (!e.target.matches("#form")) {
                             return;
                         }
 
                         e.preventDefault();
-                        const oldJson = document.getElementById('old').value;
-                        const newJson = document.getElementById('new').value;
-                        // We use the FS to pass values, otherwise we got the following error:
-                        // Uncaught RuntimeError: memory access out of bound
-                        FS.unlink('/app/data/old.json')
-                        FS.writeFile('/app/data/old.json', oldJson);
-                        FS.unlink('/app/data/new.json')
-                        FS.writeFile('/app/data/new.json', newJson);
-
-                        ccall('phpw_run', null, ['string'], [
-                            '$argv = ["/app/lib.php", "/app/data/old.json", "/app/data/new.json"]; require "/app/lib.php";',
-                        ]);
-
-                        const htmlString = buffer.join('');
-                        buffer.length = 0;
+                        const htmlString = await compare(
+                            document.getElementById('old').value,
+                            document.getElementById('new').value,
+                        );
 
                         const htmlDoc = parser.parseFromString(htmlString, 'text/html');
                         const newContent = htmlDoc.getElementById('content');
