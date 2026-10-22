@@ -1,6 +1,6 @@
 {
     "require": {
         "castor-php/php-qa": "^0.3.4",
-        "lyrixx/php-wasm-builder": "^0.7.0"
+        "lyrixx/php-wasm-builder": "^0.7.1"
     }
 }

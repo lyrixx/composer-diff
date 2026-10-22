@@ -127,7 +127,7 @@ function wasm_stack(): Stack
 {
     return Stack::named('composer-diff')
         // Keep in sync with config.platform.php in composer.json
-        ->php('8.5.11')
+        ->php('8.5.12')
         ->extensions('ctype', 'filter', 'mbstring', 'tokenizer')
         // Filled by pack_app()
         ->embed('build/app')

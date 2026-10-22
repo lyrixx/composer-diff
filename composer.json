@@ -29,7 +29,7 @@
         "optimize-autoloader": true,
         "sort-packages": true,
         "platform": {
-            "php": "8.5.11"
+            "php": "8.5.12"
         }
     }
 }
