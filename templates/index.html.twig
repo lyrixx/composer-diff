@@ -258,12 +258,14 @@
                     </h2>
                     {{ include('diff.html.twig', {diff: result.diff, with_context: false}) }}
                 </div>
-                <div class="diff-section">
-                    <h2>
-                        <i class="fas fa-list me-2"></i>Comparison Results in markdown
-                    </h2>
-                    <pre>{{  result.diff.markdown }}</pre>
-                </div>
+                {% if result.diff.markdown is not empty %}
+                    <div class="diff-section">
+                        <h2>
+                            <i class="fas fa-list me-2"></i>Comparison Results in markdown
+                        </h2>
+                        <pre>{{  result.diff.markdown }}</pre>
+                    </div>
+                {% endif %}
             {% endif %}
             <footer class="mt-5 pt-4 border-top">
                 <div class="mb-4 py-3 px-4 bg-light rounded">
