@@ -1,8 +1,8 @@
 {% macro render(title, entries) %}
-    {% if entries %}
+    {% if entries is not empty %}
         <div class="mt-4">
             <h3>
-                <i class="fas {% if title in 'Dev' %}fa-wrench{% else %}fa-box{% endif %} me-2"></i>
+                <i class="fas {% if 'Dev' in title %}fa-wrench{% else %}fa-box{% endif %} me-2"></i>
                 {{ title }}
             </h3>
             <div class="table-responsive">
@@ -61,7 +61,7 @@
     {% endif %}
 {% endmacro %}
 
-{% if not diff.prodEntries and not diff.devEntries %}
+{% if diff.prodEntries is empty and diff.devEntries is empty %}
     <div class="alert alert-warning mt-2" role="alert">
         Both <code>composer.lock</code> looks the same
     </div>
