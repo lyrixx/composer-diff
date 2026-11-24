@@ -3,6 +3,7 @@
 use Castor\Attribute\AsOption;
 use Castor\Attribute\AsTask;
 use PhpWasm\Stack;
+use PhpWasm\Target;
 use Symfony\Component\Console\Input\InputOption;
 
 use function Castor\finder;
@@ -115,7 +116,7 @@ function install_if_missing(): void
 
 function build_if_missing(): void
 {
-    if (!is_file(wasm_stack()->artifact('web', 'mjs'))) {
+    if (!is_file(wasm_stack()->artifact(Target::Web, 'mjs'))) {
         build();
     }
 }
@@ -127,12 +128,11 @@ function wasm_stack(): Stack
 {
     return Stack::named('composer-diff')
         // Keep in sync with config.platform.php in composer.json
-        ->php('8.5.12')
+        ->php('8.6.0')
         ->extensions('ctype', 'filter', 'mbstring', 'tokenizer')
         // Filled by pack_app()
         ->embed('build/app')
-        ->targets('web')
-        ->memory('256mb')
+        ->targets(Target::Web)
         ->outputDir('public/build');
 }
 
