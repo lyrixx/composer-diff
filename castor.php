@@ -133,7 +133,6 @@ function wasm_stack(): Stack
         // Filled by pack_app()
         ->embed('build/app')
         ->targets(Target::Web)
-        ->memory('256mb')
         ->outputDir('public/build');
 }
 
