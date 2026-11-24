@@ -3,6 +3,7 @@
 use Castor\Attribute\AsOption;
 use Castor\Attribute\AsTask;
 use PhpWasm\Stack;
+use PhpWasm\Target;
 use Symfony\Component\Console\Input\InputOption;
 
 use function Castor\finder;
@@ -115,7 +116,7 @@ function install_if_missing(): void
 
 function build_if_missing(): void
 {
-    if (!is_file(wasm_stack()->artifact('web', 'mjs'))) {
+    if (!is_file(wasm_stack()->artifact(Target::Web, 'mjs'))) {
         build();
     }
 }
@@ -131,7 +132,7 @@ function wasm_stack(): Stack
         ->extensions('ctype', 'filter', 'mbstring', 'tokenizer')
         // Filled by pack_app()
         ->embed('build/app')
-        ->targets('web')
+        ->targets(Target::Web)
         ->memory('256mb')
         ->outputDir('public/build');
 }
